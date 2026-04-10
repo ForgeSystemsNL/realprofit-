@@ -8,7 +8,7 @@
 // Usage: GET /api/shopify/register-webhooks
 // Run once after deployment — check logs to confirm success.
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { registerWebhook, listWebhooks } from "@/lib/shopify";
 
 export async function GET() {
