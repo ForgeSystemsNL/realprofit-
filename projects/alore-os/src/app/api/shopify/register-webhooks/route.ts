@@ -11,14 +11,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { registerWebhook, listWebhooks } from "@/lib/shopify";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL!;
     const webhookUrl = `${appUrl}/api/shopify/webhook`;
 
     // Check existing webhooks first to avoid duplicates
     const existing = await listWebhooks();
-    const existingAddresses = existing.map((w: any) => w.address);
+    const existingAddresses = existing.map((w: { address: string }) => w.address);
 
     const topics = [
       "orders/create",
@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
       success:    true,
       webhookUrl,
       registered: results,
-      existing:   existing.map((w: any) => ({
+      existing:   existing.map((w: { id: string; topic: string; address: string }) => ({
         id:      w.id,
         topic:   w.topic,
         address: w.address,

@@ -57,7 +57,7 @@ export default function UserMenu() {
         }
 
         loadUser();
-    }, []);
+    }, [supabase]);
 
     ///// Close menu when clicking outside
     useEffect(() => {

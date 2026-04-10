@@ -81,7 +81,7 @@ export interface ShopifyCustomer {
 
 export async function getAllOrders(limit = 250): Promise<ShopifyOrder[]> {
   const orders: ShopifyOrder[] = [];
-  let url = `/orders.json?status=any&limit=${limit}`;
+  const url = `/orders.json?status=any&limit=${limit}`;
 
   // Handle Shopify cursor-based pagination
   while (url) {

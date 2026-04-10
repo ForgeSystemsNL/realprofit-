@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
 // Write order to Supabase
 // ---------------------------------------------------------------------------
 
-async function upsertOrder(tenantId: string, order: any) {
+async function upsertOrder(tenantId: string, order: { email: string; billing_address?: { first_name: string; last_name: string }, total_price?: string; created_at: string; id: number; name: string; subtotal_price?: string; total_tax?: string; total_discounts?: string; shipping_lines?: { price?: string }[]; currency?: string; financial_status?: string; fulfillment_status?: string; source_name?: string; referring_site?: string; landing_site?: string; line_items?: any[] } ) {
   const { error } = await supabaseAdmin.from("orders").upsert({
     tenant_id:          tenantId,
     shopify_order_id:   String(order.id),
@@ -115,7 +115,7 @@ async function upsertOrder(tenantId: string, order: any) {
 // Upsert customer — create or update totals
 // ---------------------------------------------------------------------------
 
-async function upsertCustomer(tenantId: string, order: any) {
+async function upsertCustomer(tenantId: string, order: { email: string; billing_address?: { first_name: string; last_name: string }, total_price?: string; created_at: string } ) {
   const email = order.email;
   if (!email) return;
 
