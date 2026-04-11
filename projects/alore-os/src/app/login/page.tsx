@@ -172,20 +172,20 @@
 //
 // Updated to handle ?error=confirmation_failed from the confirm route
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 
-export default function LoginPage() {
-  const router       = useRouter();
+function LoginContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const supabase     = createClient();
+  const supabase = createClient();
 
-  const [mode, setMode]       = useState<"login" | "signup">("login");
-  const [email, setEmail]     = useState("");
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   // Show error if redirected from failed confirmation
@@ -314,5 +314,18 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0F0F0D] flex items-center justify-center">
+        <p className="text-white/30 text-sm">Loading...</p>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }
