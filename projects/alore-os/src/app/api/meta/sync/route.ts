@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { getCampaignInsights } from "@/lib/meta";
 import { getCampaigns, updateCampaign } from "@/lib/notion";

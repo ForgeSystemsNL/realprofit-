@@ -1,6 +1,8 @@
 // src/app/api/shopify/sync/route.ts
 // Place at: projects/alore-os/src/app/api/shopify/sync/route.ts
 
+export const dynamic = "force-dynamic";
+
 import { NextResponse }               from "next/server";
 import { createServerSupabaseClient } from "@/lib/supabase-server";
 import { supabaseAdmin }              from "@/lib/supabase-admin";

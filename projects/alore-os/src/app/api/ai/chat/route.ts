@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+
+
 import Anthropic from "@anthropic-ai/sdk";
 
 const SYSTEM_PROMPT = `You are RealProfit AI, an ecommerce profit analyst for a Shopify brand.

@@ -8,6 +8,8 @@
 // Usage: GET /api/shopify/register-webhooks
 // Run once after deployment — check logs to confirm success.
 
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { registerWebhook, listWebhooks } from "@/lib/shopify";
 

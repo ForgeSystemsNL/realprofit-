@@ -5,6 +5,8 @@
 // Every new order → written to Supabase automatically.
 // Shopify sends: orders/create, orders/updated, orders/paid
 
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import crypto                        from "crypto";
 import { supabaseAdmin }             from "@/lib/supabase-admin";
