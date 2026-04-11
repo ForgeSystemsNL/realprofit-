@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet: { name: string; value: string; options?: { [key: string]: any } }[]) {
+        setAll(cookiesToSet: { name: string; value: string; options?: { [key: string]: string } }[]) {
           cookiesToSet.forEach(({ name, value, options }) => {
             cookieStore.set(name, value, options);
           });
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
 
   // Verify the token with Supabase
   const { error } = await supabase.auth.verifyOtp({
-    type:       type as any,
+    type:       type as string,
     token_hash,
   });
 
