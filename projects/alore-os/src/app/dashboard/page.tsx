@@ -3,6 +3,8 @@ import { getKpiEntries } from "@/lib/notion";
 import { getSubscriberCount } from "@/lib/klaviyo";
 import type { KpiEntry } from "@/lib/notion";
 
+import { createServerSupabaseClient } from "@/lib/supabase-server";
+
 // ---------------------------------------------------------------------------
 // Mock data
 // ---------------------------------------------------------------------------
@@ -142,6 +144,17 @@ function getHealthScore(margin: number): { label: string; color: string; dotColo
 export default async function DashboardPage() {
   const { kpi, subscriberCount } = await fetchDashboardData();
 
+  const supabase = await createServerSupabaseClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  const rawName =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    user?.email?.split("@")[0] ||
+    "there";
+
+  const firstName = rawName.split(" ")[0];
+
   const mer = kpi.adSpend > 0 ? kpi.revenue / kpi.adSpend : 0;
   const cpa = kpi.adSpend > 0 && kpi.orders > 0 ? kpi.adSpend / kpi.orders : 0;
   const trueProfit = kpi.revenue - TOTAL_COSTS;
@@ -155,8 +168,8 @@ export default async function DashboardPage() {
   const hour = now.getHours();
   const greeting =
     hour >= 5 && hour < 12 ? "Goedemorgen" :
-    hour >= 12 && hour < 18 ? "Goedemiddag" :
-    hour >= 18 ? "Goedenavond" : "Goedenacht";
+      hour >= 12 && hour < 18 ? "Goedemiddag" :
+        hour >= 18 ? "Goedenavond" : "Goedenacht";
 
   const dateStr = now.toLocaleDateString("nl-NL", {
     weekday: "long",
@@ -172,8 +185,9 @@ export default async function DashboardPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-medium text-[#1A1A18]">{greeting}, Joey</h1>
-          <p className="text-sm text-[#8C8A84] mt-1">RealProfit Dashboard</p>
+          {/* <h1 className="text-2xl font-medium text-[#1A1A18]"></h1> */}
+          <h1 className="text-2xl font-medium text-[#1A1A18]">RealProfit Dashboard</h1>
+          <p className="text-sm text-[#8C8A84] mt-1">{greeting}, {firstName}</p>
         </div>
         <p className="text-sm text-[#8C8A84] capitalize pt-1">{dateStr}</p>
       </div>
