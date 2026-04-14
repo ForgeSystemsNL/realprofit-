@@ -215,7 +215,7 @@ export default async function DashboardPage() {
 
       {/* Cost Breakdown */}
       <section className="mb-10">
-        <h2 className="text-lg font-medium text-[#1A1A18] mb-4">Kostenoverzicht</h2>
+        <h2 className="text-lg font-medium text-[#1A1A18] mb-4">Kostenoverzicht babun</h2>
         <div className="rounded-lg border border-[#E8E6E1] bg-white">
           <table className="w-full text-sm">
             <tbody>
